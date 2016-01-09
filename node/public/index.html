@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Networked Deck</title>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="public/js/test.js"></script>
+		<script type="text/javascript" src="public/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="public/js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="public/js/touchPunch.js"></script>
+		<!-- styling -->
+		<link rel="stylesheet" type="text/css" href="public/css/style.css">
+		<link rel="stylesheet" type="text/css" href="public/css/jquery-ui.min.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	</head>
+<body>
+ 	<div class="id"></div>
+ 	<div class="content">
+
+ 		<!-- content dynamically added here -->
+ 		<button onclick="isTable()">start new table</button>
+
+ 		<button onclick="isHand()">sit at table</button>
+
+ 	</div>
+ 
+	<script>
+	 
+		var socket = io();
+		var table = false;
+		var id;
+		var hand = false;
+		 
+		socket.on('user', function(msg) {
+			console.log(msg);
+			addPlayertoTable(msg);
+		});
+
+		socket.on("assignId", function(msg) {
+			if (id == null) {
+				id = msg;
+				console.log(id);
+				$("div.id").html(id);
+			}
+		})
+
+		socket.on("gone", function(msg) {
+			for (var i = 0; i < msg.length; i++) {
+				if (id == msg[i]) {
+					var toReturn = [id, hand]
+					socket.emit("returnID", toReturn);
+				}
+			};
+		})
+
+		socket.on('take', function(msg) {
+			takeCard(msg[0], msg[1], msg[2]);
+		})
+
+		socket.on('toTable', function(msg) {
+			console.log(msg[1])
+			playCardToTable(msg[0], msg[1]);
+		})
+
+		socket.on('removeHand', function(msg){
+			emptyPlayers();
+		})
+
+		socket.on('playersAtTable', function(msg) {
+			for (var i = 0; i < msg.length; i++) {
+				addPlayertoTable(msg[i]);
+			};
+		})
+
+		function isTable () {
+			$("div.content").empty();
+			$("div.content").append('<div class="table"><div class="playerArea"></div><div class="deck"></div></div>')
+			table = true;
+			//initialize
+			droppableDeck();
+			makeDeck();
+			shuffle(deck);
+			touchFlip();
+			tapDeck();
+			droppableDeck();
+			socket.emit("amTable", id);
+		}
+
+		function isHand () {
+			$("div.content").empty();
+			addPlayertoHand(id);
+			socket.emit('addHand',id); // add a player into play
+			hand = true;
+		}
+
+		function emptyPlayers() {
+			$("div.playerArea").empty();
+		}
+
+
+	 
+	</script>
+	<script type="text/javascript" src="public/js/function.js"></script>
+
+
+</body>
+</html>

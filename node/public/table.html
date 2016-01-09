@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Networked Deck</title>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="public/js/test.js"></script>
+		<script type="text/javascript" src="public/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="public/js/jquery-ui.min.js"></script>
+		<!-- styling -->
+		<link rel="stylesheet" type="text/css" href="public/css/style.css">
+		<link rel="stylesheet" type="text/css" href="public/css/jquery-ui.min.css">
+	</head>
+<body>
+ 
+ 	<div class="content">
+
+ 		<!-- content dynamically added here -->
+ 		<h1>is table</h1>
+
+ 	</div>
+ 
+	<script>
+	 
+	var socket = io();
+	var table = false;
+	 
+	socket.on('user', function(msg) {
+		console.log(msg);
+		if (msg == 0) {
+			isTable();
+		} else {
+			if (!table) {
+				addPlayertoHand();
+			} else {
+				addPlayertoTable();
+			}
+		}
+	});
+
+	function isTable () {
+		$("div.content").append('<div class="table"><div class="playerArea"></div><div class="deck"></div></div>')
+		table = true;
+		//initialize
+		droppableDeck();
+		makeDeck();
+		shuffle(deck);
+		touchFlip();
+		tapDeck();
+		droppableDeck();
+	}
+
+	function isHand () {
+		$("div.content").append('<div class="table"><div class="playerArea"></div><div class="deck"></div></div>')
+	}
+	 
+	</script>
+	<script type="text/javascript" src="public/js/function.js"></script>
+
+
+</body>
+</html>

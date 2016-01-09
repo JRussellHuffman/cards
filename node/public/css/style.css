@@ -1,0 +1,100 @@
+body {
+	font-family: arial, helvetica, sans-serif;
+	margin:0;
+}
+div.player {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	border:1px solid #900;
+}
+div.card {
+	margin: 5px 10px;
+	float: left;
+	padding: 40px 20px 10px;
+	border: 3px solid #900;
+	border-radius: 5px;
+	width: 60px;
+	text-align: center;
+	font-weight: 900;
+	height: 50px;
+	color:white;
+	background-color: white;
+}
+
+.S {
+	background-image: url(../assets/spade.png) 
+}
+.C {
+	background-image: url(../assets/club.png) 
+}
+.D {
+	background-image: url(../assets/diamond.png) 
+}
+.H {
+	background-image: url(../assets/heart.png) 
+}
+
+div.table {
+	position: relative;
+	width:100%;
+	height: 700px;
+	background: #009900;
+	float:left;
+}
+
+div.playUp {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: #090;
+    top:0;
+}
+div.playDown {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: #090;
+    bottom:0;
+}
+
+div.faceDown {
+	background-image: url(../assets/x.png);
+	color:transparent;
+}
+
+div.faceUp {
+
+}
+
+div.deck {
+	bottom:10px;
+	right: 10px;
+	position: absolute;
+	padding: 40px 20px 10px;
+	border: 3px solid #c00;
+	border-radius: 5px;
+	width: 60px;
+	text-align: center;
+	font-weight: 900;
+	height: 50px;
+	color:white;
+	background-color: white;
+	background-image: url(../assets/x2.png);
+}
+
+div.playerArea {
+	position: relative;
+	float: right;
+	height: 100%;
+	width: 125px;
+	border-left: 1px solid #900;
+}
+
+div.playerStation {
+	position: relative;
+	height: 100px;
+	margin:10px 0;
+	border:1px solid #900;
+}
